@@ -1,11 +1,7 @@
-FROM verdaccio/verdaccio:4
+FROM node:alpine
 
-USER root
+RUN yarn add verdaccio@5 verdaccio-github-oauth-ui@3
 
-ENV NODE_ENV=production
+COPY config.yaml .
 
-RUN yarn && yarn add verdaccio-github-oauth-ui@2.4.0
-
-COPY ./config.yaml /verdaccio/conf
-
-USER verdaccio
+CMD yarn verdaccio --config config.yaml --listen http://0.0.0.0:4873
